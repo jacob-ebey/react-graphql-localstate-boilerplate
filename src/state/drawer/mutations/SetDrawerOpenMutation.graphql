@@ -1,0 +1,3 @@
+mutation SetDrawerOpenMutation($open: Boolean!) {
+  setDrawerOpen(open: $open) @client
+}
