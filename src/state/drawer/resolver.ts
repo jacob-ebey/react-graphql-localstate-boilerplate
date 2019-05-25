@@ -1,19 +1,15 @@
-import { gql } from 'graphql.macro';
+import { loader } from 'graphql.macro';
 
-import { Ctx, PartialClientState } from '../types'
-import { SetDrawerOpenArgs } from './types'
+import { DrawerOpenQuery, DrawerState, SetDrawerOpenMutationVariables } from '../../types';
+import { Ctx } from '../types';
+
+const DrawerOpenQueryGQL = loader('./queries/DrawerOpen.graphql');
 
 export default {
   Mutation: {
-    setDrawerOpen: (_: any, { open }: SetDrawerOpenArgs, { cache }: Ctx) => {
-      cache.writeQuery<PartialClientState>({
-        query: gql`
-          query {
-            drawer @client{
-              open
-            }
-          }
-        `,
+    setDrawerOpen(_: DrawerState, { open }: SetDrawerOpenMutationVariables, { cache }: Ctx): boolean {
+      cache.writeQuery<DrawerOpenQuery>({
+        query: DrawerOpenQueryGQL,
         data: {
           drawer: {
             open,
@@ -21,6 +17,8 @@ export default {
           }
         }
       });
+
+      return open;
     }
   }
 };

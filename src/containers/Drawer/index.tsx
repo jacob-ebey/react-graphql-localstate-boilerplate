@@ -3,24 +3,24 @@ import { loader } from 'graphql.macro';
 import { useMutation, useQuery } from 'react-apollo-hooks';
 
 import Drawer from '../../components/Drawer';
-import { PartialClientState } from '../../state';
+import { DrawerQuery } from '../../types';
 
-const DrawerQuery = loader('./DrawerQuery.graphql');
+const DrawerQueryGQL = loader('./DrawerQuery.graphql');
 const SetDrawerOpenMutation = loader('../../state/drawer/mutations/SetDrawerOpenMutation.graphql');
 
 const DrawerContainer: React.FC = () => {
-  const { data } = useQuery<PartialClientState>(DrawerQuery, { fetchPolicy: 'cache-only' });
+  const { data } = useQuery<DrawerQuery>(DrawerQueryGQL, { fetchPolicy: 'cache-only' });
   const setDrawerOpen = useMutation(SetDrawerOpenMutation);
 
-  const open = !!data && !!data.drawer && !!data.drawer.open;
+  const open = !!data && !!data.drawer.open;
 
   const onCloseDrawer = React.useCallback(() => {
     setDrawerOpen({
       variables: { open: false },
     })
-  }, [setDrawerOpen])
+  }, [setDrawerOpen]);
 
-  return <Drawer open={open} onClose={onCloseDrawer} />
+  return <Drawer title="GraphQL React" open={open} onClose={onCloseDrawer} />;
 }
 
 export default DrawerContainer;

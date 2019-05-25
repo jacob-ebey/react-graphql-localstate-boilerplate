@@ -1,0 +1,9 @@
+
+  schema: schema.graphql
+  # TODO: Figure out how to load the gql tags from .ts files
+  documents: ["src/**/*.graphql", "src/**/*.ts"]
+  generates:
+    ./src/types/generated-types.ts:
+      plugins:
+        - typescript
+        - typescript-operations

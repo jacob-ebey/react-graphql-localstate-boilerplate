@@ -1,21 +1,26 @@
 import * as React from 'react';
 import { loader } from 'graphql.macro';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation, useQuery } from 'react-apollo-hooks';
 
 import Toolbar from '../../components/Toolbar';
+import { SetDrawerOpenMutation, SetDrawerOpenMutationVariables, ToolbarQuery } from '../../types';
 
-const SetDrawerOpenMutation = loader('../../state/drawer/mutations/SetDrawerOpenMutation.graphql');
+const ToolbarQueryGQL = loader('./ToolbarQuery.graphql');
+const SetDrawerOpenMutationGQL = loader('../../state/drawer/mutations/SetDrawerOpenMutation.graphql');
 
 const DrawerContainer: React.FC = () => {
-  const setDrawerOpen = useMutation(SetDrawerOpenMutation);
+  const { data } = useQuery<ToolbarQuery>(ToolbarQueryGQL);
+  const setDrawerOpen = useMutation<SetDrawerOpenMutation, SetDrawerOpenMutationVariables>(SetDrawerOpenMutationGQL);
+
+  const open = !!data && !!data.drawer.open;
 
   const onOpenDrawer = React.useCallback(() => {
     setDrawerOpen({
       variables: { open: true },
     })
-  }, [setDrawerOpen])
+  }, [setDrawerOpen]);
 
-  return <Toolbar title="GraphQL React Boilerplate" onOpenDrawer={onOpenDrawer} />
+  return <Toolbar title="GraphQL React" drawerOpen={open} onOpenDrawer={onOpenDrawer} />;
 }
 
 export default DrawerContainer;

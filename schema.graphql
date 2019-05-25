@@ -1,0 +1,13 @@
+directive @client on FIELD
+
+type Query {
+  drawer: DrawerState!
+}
+
+type Mutation {
+  setDrawerOpen(open: Boolean!): Boolean!
+}
+
+type DrawerState {
+  open: Boolean!
+}

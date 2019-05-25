@@ -1,4 +1,4 @@
-query Drawer {
+query Toolbar {
   drawer @client {
     open
   }
