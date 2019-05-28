@@ -1,0 +1,14 @@
+query PokemonSearchPage($query: String, $first: Int, $skip: Int, $types: [String!]) {
+  searchPokemon(
+    query: $query
+    first: $first
+    skip: $skip
+    types: $types
+  ) {
+    id
+    pokedexNumber
+    name {
+      english
+    }
+  }
+}

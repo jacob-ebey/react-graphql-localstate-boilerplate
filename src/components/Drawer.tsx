@@ -1,4 +1,5 @@
 import * as React from 'react';
+import useRouter from 'use-react-router';
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import MuiDrawer from '@material-ui/core/Drawer';
@@ -19,6 +20,11 @@ export const drawerWidth = 250;
 
 const Drawer: React.FC<DrawerProps> = ({ open, onClose, title }) => {
   const classes = useStyles();
+  const router = useRouter();
+
+  const navigateTo = React.useCallback((to: string) => () => {
+    router.history.push(to);
+  }, [router]);
 
   return (
     <MuiDrawer
@@ -40,8 +46,8 @@ const Drawer: React.FC<DrawerProps> = ({ open, onClose, title }) => {
         <Divider />
         
         <List>
-          <ListItem button>
-            <ListItemText>Menu Item 1</ListItemText>
+          <ListItem button onClick={navigateTo('/pokemon')}>
+            <ListItemText>Pokemon</ListItemText>
           </ListItem>
         </List>
       </div>

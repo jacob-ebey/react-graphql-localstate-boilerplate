@@ -1,4 +1,8 @@
+# import * from "./remote-schema.graphql"
+
 directive @client on FIELD
+
+scalar Int
 
 type Query {
   drawer: DrawerState!
