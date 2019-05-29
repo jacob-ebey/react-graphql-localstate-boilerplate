@@ -1,11 +1,11 @@
 # source: http://localhost:4000
-# timestamp: Mon May 27 2019 23:16:15 GMT-0700 (Pacific Daylight Time)
+# timestamp: Wed May 29 2019 00:30:23 GMT-0700 (Pacific Daylight Time)
 
-type Item implements Node {
+type Item {
   id: ID!
   pokedexNumber: Int!
   nameSearch: String!
-  name(where: MultiLangWhereInput): MultiLang!
+  name: MultiLang!
 }
 
 type MultiLang {
@@ -14,150 +14,13 @@ type MultiLang {
   chinese: String!
 }
 
-input MultiLangWhereInput {
-  """Logical AND on all given filters."""
-  AND: [MultiLangWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [MultiLangWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [MultiLangWhereInput!]
-  english: String
-
-  """All values that are not equal to given value."""
-  english_not: String
-
-  """All values that are contained in given list."""
-  english_in: [String!]
-
-  """All values that are not contained in given list."""
-  english_not_in: [String!]
-
-  """All values less than the given value."""
-  english_lt: String
-
-  """All values less than or equal the given value."""
-  english_lte: String
-
-  """All values greater than the given value."""
-  english_gt: String
-
-  """All values greater than or equal the given value."""
-  english_gte: String
-
-  """All values containing the given string."""
-  english_contains: String
-
-  """All values not containing the given string."""
-  english_not_contains: String
-
-  """All values starting with the given string."""
-  english_starts_with: String
-
-  """All values not starting with the given string."""
-  english_not_starts_with: String
-
-  """All values ending with the given string."""
-  english_ends_with: String
-
-  """All values not ending with the given string."""
-  english_not_ends_with: String
-  japanese: String
-
-  """All values that are not equal to given value."""
-  japanese_not: String
-
-  """All values that are contained in given list."""
-  japanese_in: [String!]
-
-  """All values that are not contained in given list."""
-  japanese_not_in: [String!]
-
-  """All values less than the given value."""
-  japanese_lt: String
-
-  """All values less than or equal the given value."""
-  japanese_lte: String
-
-  """All values greater than the given value."""
-  japanese_gt: String
-
-  """All values greater than or equal the given value."""
-  japanese_gte: String
-
-  """All values containing the given string."""
-  japanese_contains: String
-
-  """All values not containing the given string."""
-  japanese_not_contains: String
-
-  """All values starting with the given string."""
-  japanese_starts_with: String
-
-  """All values not starting with the given string."""
-  japanese_not_starts_with: String
-
-  """All values ending with the given string."""
-  japanese_ends_with: String
-
-  """All values not ending with the given string."""
-  japanese_not_ends_with: String
-  chinese: String
-
-  """All values that are not equal to given value."""
-  chinese_not: String
-
-  """All values that are contained in given list."""
-  chinese_in: [String!]
-
-  """All values that are not contained in given list."""
-  chinese_not_in: [String!]
-
-  """All values less than the given value."""
-  chinese_lt: String
-
-  """All values less than or equal the given value."""
-  chinese_lte: String
-
-  """All values greater than the given value."""
-  chinese_gt: String
-
-  """All values greater than or equal the given value."""
-  chinese_gte: String
-
-  """All values containing the given string."""
-  chinese_contains: String
-
-  """All values not containing the given string."""
-  chinese_not_contains: String
-
-  """All values starting with the given string."""
-  chinese_starts_with: String
-
-  """All values not starting with the given string."""
-  chinese_not_starts_with: String
-
-  """All values ending with the given string."""
-  chinese_ends_with: String
-
-  """All values not ending with the given string."""
-  chinese_not_ends_with: String
-}
-
-"""An object with an ID"""
-interface Node {
-  """The id of the object."""
-  id: ID!
-}
-
-type Pokemon implements Node {
+type Pokemon {
   id: ID!
   pokedexNumber: Int!
   nameSearch: String!
-  name(where: MultiLangWhereInput): MultiLang!
-  types(where: PokemonTypeWhereInput, orderBy: PokemonTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PokemonType!]
-  base(where: PokemonBaseStatsWhereInput): PokemonBaseStats!
+  name: MultiLang!
+  types: [PokemonType!]!
+  base: PokemonBaseStats!
 }
 
 type PokemonBaseStats {
@@ -169,354 +32,30 @@ type PokemonBaseStats {
   speed: Float!
 }
 
-input PokemonBaseStatsWhereInput {
-  """Logical AND on all given filters."""
-  AND: [PokemonBaseStatsWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [PokemonBaseStatsWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [PokemonBaseStatsWhereInput!]
-  hp: Float
-
-  """All values that are not equal to given value."""
-  hp_not: Float
-
-  """All values that are contained in given list."""
-  hp_in: [Float!]
-
-  """All values that are not contained in given list."""
-  hp_not_in: [Float!]
-
-  """All values less than the given value."""
-  hp_lt: Float
-
-  """All values less than or equal the given value."""
-  hp_lte: Float
-
-  """All values greater than the given value."""
-  hp_gt: Float
-
-  """All values greater than or equal the given value."""
-  hp_gte: Float
-  attack: Float
-
-  """All values that are not equal to given value."""
-  attack_not: Float
-
-  """All values that are contained in given list."""
-  attack_in: [Float!]
-
-  """All values that are not contained in given list."""
-  attack_not_in: [Float!]
-
-  """All values less than the given value."""
-  attack_lt: Float
-
-  """All values less than or equal the given value."""
-  attack_lte: Float
-
-  """All values greater than the given value."""
-  attack_gt: Float
-
-  """All values greater than or equal the given value."""
-  attack_gte: Float
-  defense: Float
-
-  """All values that are not equal to given value."""
-  defense_not: Float
-
-  """All values that are contained in given list."""
-  defense_in: [Float!]
-
-  """All values that are not contained in given list."""
-  defense_not_in: [Float!]
-
-  """All values less than the given value."""
-  defense_lt: Float
-
-  """All values less than or equal the given value."""
-  defense_lte: Float
-
-  """All values greater than the given value."""
-  defense_gt: Float
-
-  """All values greater than or equal the given value."""
-  defense_gte: Float
-  spAttack: Float
-
-  """All values that are not equal to given value."""
-  spAttack_not: Float
-
-  """All values that are contained in given list."""
-  spAttack_in: [Float!]
-
-  """All values that are not contained in given list."""
-  spAttack_not_in: [Float!]
-
-  """All values less than the given value."""
-  spAttack_lt: Float
-
-  """All values less than or equal the given value."""
-  spAttack_lte: Float
-
-  """All values greater than the given value."""
-  spAttack_gt: Float
-
-  """All values greater than or equal the given value."""
-  spAttack_gte: Float
-  spDefense: Float
-
-  """All values that are not equal to given value."""
-  spDefense_not: Float
-
-  """All values that are contained in given list."""
-  spDefense_in: [Float!]
-
-  """All values that are not contained in given list."""
-  spDefense_not_in: [Float!]
-
-  """All values less than the given value."""
-  spDefense_lt: Float
-
-  """All values less than or equal the given value."""
-  spDefense_lte: Float
-
-  """All values greater than the given value."""
-  spDefense_gt: Float
-
-  """All values greater than or equal the given value."""
-  spDefense_gte: Float
-  speed: Float
-
-  """All values that are not equal to given value."""
-  speed_not: Float
-
-  """All values that are contained in given list."""
-  speed_in: [Float!]
-
-  """All values that are not contained in given list."""
-  speed_not_in: [Float!]
-
-  """All values less than the given value."""
-  speed_lt: Float
-
-  """All values less than or equal the given value."""
-  speed_lte: Float
-
-  """All values greater than the given value."""
-  speed_gt: Float
-
-  """All values greater than or equal the given value."""
-  speed_gte: Float
+type PokemonSearchResult {
+  total: Int!
+  results: [Pokemon!]!
 }
 
-type PokemonSkill implements Node {
+type PokemonSkill {
   id: ID!
   pokedexNumber: Int!
-  name(where: MultiLangWhereInput): MultiLang!
+  name: MultiLang!
   accuracy: Int!
   power: Int!
   pp: Int!
-  type(where: PokemonTypeWhereInput): PokemonType!
+  type: PokemonType!
 }
 
-type PokemonType implements Node {
+type PokemonType {
   id: ID!
   english: String!
   chinese: String!
   japanese: String!
 }
 
-enum PokemonTypeOrderByInput {
-  id_ASC
-  id_DESC
-  english_ASC
-  english_DESC
-  chinese_ASC
-  chinese_DESC
-  japanese_ASC
-  japanese_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-input PokemonTypeWhereInput {
-  """Logical AND on all given filters."""
-  AND: [PokemonTypeWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [PokemonTypeWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [PokemonTypeWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  english: String
-
-  """All values that are not equal to given value."""
-  english_not: String
-
-  """All values that are contained in given list."""
-  english_in: [String!]
-
-  """All values that are not contained in given list."""
-  english_not_in: [String!]
-
-  """All values less than the given value."""
-  english_lt: String
-
-  """All values less than or equal the given value."""
-  english_lte: String
-
-  """All values greater than the given value."""
-  english_gt: String
-
-  """All values greater than or equal the given value."""
-  english_gte: String
-
-  """All values containing the given string."""
-  english_contains: String
-
-  """All values not containing the given string."""
-  english_not_contains: String
-
-  """All values starting with the given string."""
-  english_starts_with: String
-
-  """All values not starting with the given string."""
-  english_not_starts_with: String
-
-  """All values ending with the given string."""
-  english_ends_with: String
-
-  """All values not ending with the given string."""
-  english_not_ends_with: String
-  chinese: String
-
-  """All values that are not equal to given value."""
-  chinese_not: String
-
-  """All values that are contained in given list."""
-  chinese_in: [String!]
-
-  """All values that are not contained in given list."""
-  chinese_not_in: [String!]
-
-  """All values less than the given value."""
-  chinese_lt: String
-
-  """All values less than or equal the given value."""
-  chinese_lte: String
-
-  """All values greater than the given value."""
-  chinese_gt: String
-
-  """All values greater than or equal the given value."""
-  chinese_gte: String
-
-  """All values containing the given string."""
-  chinese_contains: String
-
-  """All values not containing the given string."""
-  chinese_not_contains: String
-
-  """All values starting with the given string."""
-  chinese_starts_with: String
-
-  """All values not starting with the given string."""
-  chinese_not_starts_with: String
-
-  """All values ending with the given string."""
-  chinese_ends_with: String
-
-  """All values not ending with the given string."""
-  chinese_not_ends_with: String
-  japanese: String
-
-  """All values that are not equal to given value."""
-  japanese_not: String
-
-  """All values that are contained in given list."""
-  japanese_in: [String!]
-
-  """All values that are not contained in given list."""
-  japanese_not_in: [String!]
-
-  """All values less than the given value."""
-  japanese_lt: String
-
-  """All values less than or equal the given value."""
-  japanese_lte: String
-
-  """All values greater than the given value."""
-  japanese_gt: String
-
-  """All values greater than or equal the given value."""
-  japanese_gte: String
-
-  """All values containing the given string."""
-  japanese_contains: String
-
-  """All values not containing the given string."""
-  japanese_not_contains: String
-
-  """All values starting with the given string."""
-  japanese_starts_with: String
-
-  """All values not starting with the given string."""
-  japanese_not_starts_with: String
-
-  """All values ending with the given string."""
-  japanese_ends_with: String
-
-  """All values not ending with the given string."""
-  japanese_not_ends_with: String
-}
-
 type Query {
-  searchPokemon(query: String, first: Int, skip: Int, types: [String!]): [Pokemon!]!
+  searchPokemon(query: String, first: Int, skip: Int, types: [String!]): PokemonSearchResult
   pokemon(id: ID, pokedexNumber: Int): Pokemon
   searchItems(query: String!, first: Int, skip: Int): [Item!]!
   item(id: ID, pokedexNumber: Int): Item

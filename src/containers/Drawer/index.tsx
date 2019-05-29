@@ -20,7 +20,7 @@ const DrawerContainer: React.FC = () => {
     })
   }, [setDrawerOpen]);
 
-  return <Drawer title="GraphQL React" open={open} onClose={onCloseDrawer} />;
+  return <Drawer title="Pokémon GraphQL" open={open} onClose={onCloseDrawer} />;
 }
 
 export default DrawerContainer;

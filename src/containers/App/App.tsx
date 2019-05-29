@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
   wrapper: {
     display: 'flex',
     flex: 1,
+    overflow: 'hidden',
     marginTop: theme.mixins.toolbar.minHeight,
     '@media (min-width:0px) and (orientation: landscape)': {
       marginTop: 48
@@ -50,6 +51,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
+    overflow: 'hidden',
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -74,7 +76,7 @@ const useStyles = makeStyles(theme => ({
       '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
     },
     '*::-webkit-scrollbar-thumb': {
-      backgroundColor: 'rgba(0,0,0,.1)',
+      backgroundColor: 'rgba(0,0,0,.3)',
       outline: '1px solid slategrey'
     },
     transition: theme.transitions.create('margin', {

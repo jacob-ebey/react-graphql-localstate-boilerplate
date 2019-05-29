@@ -15,3 +15,13 @@ type Mutation {
 type DrawerState {
   open: Boolean!
 }
+
+type PokemonImage {
+  full: String
+  sprite: String
+  thumbnail: String
+}
+
+type Pokemon {
+  images: PokemonImage!
+}

@@ -3,6 +3,8 @@ import GMR from 'graphql-merge-resolvers';
 import drawer from './drawer/defaults';
 import DrawerResolver from './drawer/resolver';
 
+import Pokemon from './Pokemon/resolver';
+
 export * from './types';
 
 export const defaults = {
@@ -10,5 +12,6 @@ export const defaults = {
 };
 
 export const resolvers = GMR.merge([
-  DrawerResolver
+  DrawerResolver,
+  Pokemon
 ]) as any;

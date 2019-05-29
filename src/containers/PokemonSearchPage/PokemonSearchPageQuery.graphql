@@ -5,10 +5,16 @@ query PokemonSearchPage($query: String, $first: Int, $skip: Int, $types: [String
     skip: $skip
     types: $types
   ) {
-    id
-    pokedexNumber
-    name {
-      english
+    total
+    results  {
+      id
+      pokedexNumber
+      name {
+        english
+      }
+      images @client {
+        thumbnail
+      }
     }
   }
 }
