@@ -11,6 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import CloseIcon from '@material-ui/icons/Close';
 
 export interface DrawerProps {
+  readonly activePartyCount: number;
   readonly open?: boolean;
   readonly title: string;
   onClose?(): void;
@@ -18,7 +19,7 @@ export interface DrawerProps {
 
 export const drawerWidth = 250;
 
-const Drawer: React.FC<DrawerProps> = ({ open, onClose, title }) => {
+const Drawer: React.FC<DrawerProps> = ({ activePartyCount, open, onClose, title }) => {
   const classes = useStyles();
   const router = useRouter();
 
@@ -48,6 +49,10 @@ const Drawer: React.FC<DrawerProps> = ({ open, onClose, title }) => {
         <List>
           <ListItem button onClick={navigateTo('/pokemon')}>
             <ListItemText>Pokemon</ListItemText>
+          </ListItem>
+
+          <ListItem button onClick={navigateTo('/party')}>
+            <ListItemText>My Party ({activePartyCount})</ListItemText>
           </ListItem>
         </List>
       </div>

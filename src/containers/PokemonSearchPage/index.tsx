@@ -1,13 +1,20 @@
 import * as React from 'react';
 import { loader } from 'graphql.macro';
-import { useQuery } from 'react-apollo-hooks';
-import {useDebounce} from 'use-debounce';
+import { useMutation, useQuery } from 'react-apollo-hooks';
+import { useDebounce } from 'use-debounce';
 
 import useTextField from '../../hooks/use-text-field';
 import PokemonSearchPage from '../../routes/PokemonSearchPage';
-import { PokemonSearchPageQuery, PokemonSearchPageQueryVariables } from '../../types';
+import {
+  AddToPartyMutation,
+  AddToPartyMutationVariables,
+  PokemonPartyInput,
+  PokemonSearchPageQuery,
+  PokemonSearchPageQueryVariables
+} from '../../types';
 
 const PokemonSearchPageQueryGQL = loader('./PokemonSearchPageQuery.graphql');
+const AddToPartyMutationGQL = loader('../../state/party/mutations/AddToPartyMutation.graphql');
 
 const TodosPageContainer: React.FC = () => {
   const [query, onQueryChange] = useTextField();
@@ -20,9 +27,19 @@ const TodosPageContainer: React.FC = () => {
     }
   });
 
+  const addToParty = useMutation<AddToPartyMutation, AddToPartyMutationVariables>(AddToPartyMutationGQL);
+
   const result = React.useMemo(() => data && data.searchPokemon, [data]);
   const totalPokemon = React.useMemo(() => (result && result.total) || 0, [result]);
   const pokemon = React.useMemo(() => (result && result.results) || [], [result]);
+
+  const onAddToParty = React.useCallback((pokemon: PokemonPartyInput) => {
+    addToParty({
+       variables: {
+         pokemon
+       }
+    })
+  }, [addToParty]);
 
   return (
     <PokemonSearchPage
@@ -32,6 +49,7 @@ const TodosPageContainer: React.FC = () => {
       query={query}
       resultQuery={resultQuery}
       onQueryChange={onQueryChange}
+      onAddToParty={onAddToParty}
     />
   );
 }

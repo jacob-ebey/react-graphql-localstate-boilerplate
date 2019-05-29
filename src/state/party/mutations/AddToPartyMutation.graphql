@@ -1,0 +1,3 @@
+mutation AddToParty($pokemon: PokemonPartyInput!) {
+  addToParty(pokemon: $pokemon) @client
+}

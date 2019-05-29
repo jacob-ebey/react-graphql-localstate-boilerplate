@@ -3,16 +3,23 @@ import { loader } from 'graphql.macro';
 import { useMutation, useQuery } from 'react-apollo-hooks';
 
 import Drawer from '../../components/Drawer';
-import { DrawerQuery } from '../../types';
+import {
+  DrawerQuery,
+  SetDrawerOpenMutation,
+  SetDrawerOpenMutationVariables
+} from '../../types';
 
 const DrawerQueryGQL = loader('./DrawerQuery.graphql');
-const SetDrawerOpenMutation = loader('../../state/drawer/mutations/SetDrawerOpenMutation.graphql');
+const SetDrawerOpenMutationGQL = loader('../../state/drawer/mutations/SetDrawerOpenMutation.graphql');
 
 const DrawerContainer: React.FC = () => {
-  const { data } = useQuery<DrawerQuery>(DrawerQueryGQL, { fetchPolicy: 'cache-only' });
-  const setDrawerOpen = useMutation(SetDrawerOpenMutation);
+  const { data } = useQuery<DrawerQuery>(DrawerQueryGQL);
+  const setDrawerOpen = useMutation<SetDrawerOpenMutation, SetDrawerOpenMutationVariables>(SetDrawerOpenMutationGQL);
 
-  const open = !!data && !!data.drawer.open;
+  const open = !!data && !!data.drawer && !!data.drawer.open;
+  const activePartyCount = (data && data.party && data && data.party.activeCount) || 0;
+
+  console.log(data)
 
   const onCloseDrawer = React.useCallback(() => {
     setDrawerOpen({
@@ -20,7 +27,7 @@ const DrawerContainer: React.FC = () => {
     })
   }, [setDrawerOpen]);
 
-  return <Drawer title="Pokémon GraphQL" open={open} onClose={onCloseDrawer} />;
+  return <Drawer title="Pokémon GraphQL" activePartyCount={activePartyCount} open={open} onClose={onCloseDrawer} />;
 }
 
 export default DrawerContainer;

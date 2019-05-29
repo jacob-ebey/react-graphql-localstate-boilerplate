@@ -6,14 +6,12 @@ scalar Int
 
 type Query {
   drawer: DrawerState!
+  party: PartyState!
 }
 
 type Mutation {
   setDrawerOpen(open: Boolean!): Boolean!
-}
-
-type DrawerState {
-  open: Boolean!
+  addToParty(pokemon: PokemonPartyInput!): Boolean
 }
 
 type PokemonImage {
@@ -24,4 +22,31 @@ type PokemonImage {
 
 type Pokemon {
   images: PokemonImage!
+}
+
+type DrawerState {
+  open: Boolean!
+}
+
+type PartyState {
+  activeCount: Int!
+  activeParty: [PartyPokemon!]
+}
+
+type PartyPokemon {
+  id: ID!
+  pokedexNumber: Int!
+  name: MultiLang!
+}
+
+input PokemonPartyInput {
+  id: ID!
+  pokedexNumber: Int!
+  name: MultiLangInput!
+}
+
+input MultiLangInput {
+  english: String!
+  japanese: String!
+  chinese: String!
 }

@@ -2,4 +2,7 @@ query Drawer {
   drawer @client {
     open
   }
+  party @client {
+    activeCount
+  }
 }

@@ -11,6 +11,8 @@ query PokemonSearchPage($query: String, $first: Int, $skip: Int, $types: [String
       pokedexNumber
       name {
         english
+        japanese
+        chinese
       }
       images @client {
         thumbnail

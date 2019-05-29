@@ -1,0 +1,14 @@
+query ActiveParty {
+  party @client{
+    activeCount
+    activeParty {
+      id
+      pokedexNumber
+      name {
+        english
+        japanese
+        chinese
+      }
+    }
+  }
+}

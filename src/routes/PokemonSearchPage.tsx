@@ -11,7 +11,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search'
 
-import { Pokemon } from '../types';
+import { Pokemon, PokemonPartyInput } from '../types';
 
 export interface PokemonSearchPageProps {
   loadingPokemon: boolean;
@@ -19,11 +19,16 @@ export interface PokemonSearchPageProps {
   pokemon: Partial<Pokemon>[];
   resultQuery: string;
   query: string;
+  onAddToParty(pokemon: PokemonPartyInput): void;
   onQueryChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
 }
 
-const PokemonSearchPage: React.FC<PokemonSearchPageProps> = ({ loadingPokemon, pokemon, query, resultQuery, onQueryChange }) => {
+const PokemonSearchPage: React.FC<PokemonSearchPageProps> = ({ loadingPokemon, pokemon, query, resultQuery, onAddToParty, onQueryChange }) => {
   const classes = useStyles();
+
+  const onPokemonClicked = React.useCallback((pokemon: PokemonPartyInput) => () => {
+    onAddToParty(pokemon)
+  }, [onAddToParty]);
 
   return (
     <React.Fragment>
@@ -53,7 +58,7 @@ const PokemonSearchPage: React.FC<PokemonSearchPageProps> = ({ loadingPokemon, p
         <Container>
           {pokemon.length > 0 ? pokemon.map(pokemon => (
             <Card key={pokemon.id} className={classes.card}>
-              <CardActionArea className={classes.cardArea}>
+              <CardActionArea className={classes.cardArea} onClick={onPokemonClicked(pokemon as PokemonPartyInput)}>
                 <CardMedia
                   className={classes.cardMedia}
                   image={(pokemon.images && pokemon.images.thumbnail) || undefined}

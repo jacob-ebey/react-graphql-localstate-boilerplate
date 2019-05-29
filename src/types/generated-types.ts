@@ -28,13 +28,37 @@ export type MultiLang = {
   chinese: Scalars["String"];
 };
 
+export type MultiLangInput = {
+  english: Scalars["String"];
+  japanese: Scalars["String"];
+  chinese: Scalars["String"];
+};
+
 export type Mutation = {
   __typename?: "Mutation";
   setDrawerOpen: Scalars["Boolean"];
+  addToParty?: Maybe<Scalars["Boolean"]>;
 };
 
 export type MutationSetDrawerOpenArgs = {
   open: Scalars["Boolean"];
+};
+
+export type MutationAddToPartyArgs = {
+  pokemon: PokemonPartyInput;
+};
+
+export type PartyPokemon = {
+  __typename?: "PartyPokemon";
+  id: Scalars["ID"];
+  pokedexNumber: Scalars["Int"];
+  name: MultiLang;
+};
+
+export type PartyState = {
+  __typename?: "PartyState";
+  activeCount: Scalars["Int"];
+  activeParty?: Maybe<Array<PartyPokemon>>;
 };
 
 export type Pokemon = {
@@ -63,6 +87,12 @@ export type PokemonImage = {
   full?: Maybe<Scalars["String"]>;
   sprite?: Maybe<Scalars["String"]>;
   thumbnail?: Maybe<Scalars["String"]>;
+};
+
+export type PokemonPartyInput = {
+  id: Scalars["ID"];
+  pokedexNumber: Scalars["Int"];
+  name: MultiLangInput;
 };
 
 export type PokemonSearchResult = {
@@ -97,6 +127,7 @@ export type Query = {
   searchItems: Array<Item>;
   item?: Maybe<Item>;
   drawer: DrawerState;
+  party: PartyState;
 };
 
 export type QuerySearchPokemonArgs = {
@@ -131,6 +162,7 @@ export type DrawerQueryVariables = {};
 
 export type DrawerQuery = { __typename?: "Query" } & {
   drawer: { __typename?: "DrawerState" } & Pick<DrawerState, "open">;
+  party: { __typename?: "PartyState" } & Pick<PartyState, "activeCount">;
 };
 
 export type PokemonSearchPageQueryVariables = {
@@ -178,4 +210,33 @@ export type DrawerOpenQueryVariables = {};
 
 export type DrawerOpenQuery = { __typename?: "Query" } & {
   drawer: { __typename?: "DrawerState" } & Pick<DrawerState, "open">;
+};
+
+export type AddToPartyMutationVariables = {
+  pokemon: PokemonPartyInput;
+};
+
+export type AddToPartyMutation = { __typename?: "Mutation" } & Pick<
+  Mutation,
+  "addToParty"
+>;
+
+export type ActivePartyQueryVariables = {};
+
+export type ActivePartyQuery = { __typename?: "Query" } & {
+  party: { __typename?: "PartyState" } & {
+    activeParty: Maybe<
+      Array<
+        { __typename?: "PartyPokemon" } & Pick<
+          PartyPokemon,
+          "id" | "pokedexNumber"
+        > & {
+            name: { __typename?: "MultiLang" } & Pick<
+              MultiLang,
+              "english" | "japanese" | "chinese"
+            >;
+          }
+      >
+    >;
+  };
 };
