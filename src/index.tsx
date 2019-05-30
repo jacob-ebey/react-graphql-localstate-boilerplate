@@ -16,9 +16,6 @@ const schema = loader('../schema.graphql');
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000',
-  headers: {
-    Authorization: 'bearer 49534f89c4ee756b11169006c3367b339b33bdd6'
-  },
   clientState: {
     defaults,
     resolvers,

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -72,21 +71,20 @@ const PokemonSearchPage: React.FC<PokemonSearchPageProps> = ({ loadingPokemon, p
                     {pokemon.name && pokemon.name.english}
                   </Typography>
                 </CardContent>
-
-                {pokemon.inParty && (
-                  <img alt="In Party" className={classes.pokeball} src="/images/pokeball.png" />
-                )}
               </div>
               <CardActions disableSpacing>
                 <Fab
                   variant="extended"
                   size="medium"
-                  color="primary"
+                  color={pokemon.inParty ? 'secondary' : 'primary'}
                   onClick={onPokemonClicked(pokemon)}>
-                  <AddCircleIcon />
-                  Add to party
+                  <AddCircleIcon />&nbsp;
+                  {pokemon.inParty ? 'Remove from party' : 'Add to party'}
                 </Fab>
               </CardActions>
+              {pokemon.inParty && (
+                <img alt="In Party" className={classes.pokeball} src="/images/pokeball.png" />
+              )}
             </Card>
           )) : !loadingPokemon && resultQuery && (
             <Typography variant="subtitle1">No pokémon found for `{resultQuery}`</Typography>
@@ -110,6 +108,7 @@ const useStyles = makeStyles(theme => ({
     overflowY: 'auto'
   },
   card: {
+    position: 'relative',
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2)
   },
@@ -123,8 +122,7 @@ const useStyles = makeStyles(theme => ({
   },
   cardContent: {
     display: 'flex',
-    alignItems: 'center',
-    flex: 1
+    alignItems: 'center'
   },
   pokeball: {
     position: 'absolute',
