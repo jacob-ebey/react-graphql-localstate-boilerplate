@@ -10,11 +10,14 @@ import {
   AddToPartyMutationVariables,
   PokemonPartyInput,
   PokemonSearchPageQuery,
-  PokemonSearchPageQueryVariables
+  PokemonSearchPageQueryVariables,
+  RemoveFromPartyMutation,
+  RemoveFromPartyMutationVariables
 } from '../../types';
 
 const PokemonSearchPageQueryGQL = loader('./PokemonSearchPageQuery.graphql');
 const AddToPartyMutationGQL = loader('../../state/party/mutations/AddToPartyMutation.graphql');
+const RemoveFromPartyMutationGQL = loader('../../state/party/mutations/RemoveFromPartyMutation.graphql');
 
 const TodosPageContainer: React.FC = () => {
   const [query, onQueryChange] = useTextField();
@@ -28,18 +31,27 @@ const TodosPageContainer: React.FC = () => {
   });
 
   const addToParty = useMutation<AddToPartyMutation, AddToPartyMutationVariables>(AddToPartyMutationGQL);
+  const removeFromParty = useMutation<RemoveFromPartyMutation, RemoveFromPartyMutationVariables>(RemoveFromPartyMutationGQL);
 
   const result = React.useMemo(() => data && data.searchPokemon, [data]);
   const totalPokemon = React.useMemo(() => (result && result.total) || 0, [result]);
   const pokemon = React.useMemo(() => (result && result.results) || [], [result]);
 
-  const onAddToParty = React.useCallback((pokemon: PokemonPartyInput) => {
-    addToParty({
-       variables: {
-         pokemon
-       }
-    })
-  }, [addToParty]);
+  const onPokemonClick = React.useCallback((pokemon: PokemonPartyInput, add: boolean) => {
+    if (add) {
+      addToParty({
+        variables: {
+          pokemon
+        }
+      })
+    } else {
+      removeFromParty({
+        variables: {
+          id: pokemon.id
+        }
+      })
+    }
+  }, [addToParty, removeFromParty]);
 
   return (
     <PokemonSearchPage
@@ -49,7 +61,7 @@ const TodosPageContainer: React.FC = () => {
       query={query}
       resultQuery={resultQuery}
       onQueryChange={onQueryChange}
-      onAddToParty={onAddToParty}
+      onPokemonClick={onPokemonClick}
     />
   );
 }

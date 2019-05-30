@@ -1,4 +1,4 @@
-import { PartyState } from './types';
+import { PartyState } from '../../types';
 
 const defaults: PartyState = {
   activeCount: 0,

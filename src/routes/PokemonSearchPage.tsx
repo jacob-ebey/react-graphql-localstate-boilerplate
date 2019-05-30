@@ -2,16 +2,19 @@ import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Container from '@material-ui/core/Container';
+import Fab from '@material-ui/core/Fab';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
-import SearchIcon from '@material-ui/icons/Search'
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import SearchIcon from '@material-ui/icons/Search';
 
-import { Pokemon, PokemonPartyInput } from '../types';
+import { Pokemon } from '../types';
 
 export interface PokemonSearchPageProps {
   loadingPokemon: boolean;
@@ -19,16 +22,16 @@ export interface PokemonSearchPageProps {
   pokemon: Partial<Pokemon>[];
   resultQuery: string;
   query: string;
-  onAddToParty(pokemon: PokemonPartyInput): void;
+  onPokemonClick(pokemon: Partial<Pokemon>, add: boolean): void;
   onQueryChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
 }
 
-const PokemonSearchPage: React.FC<PokemonSearchPageProps> = ({ loadingPokemon, pokemon, query, resultQuery, onAddToParty, onQueryChange }) => {
+const PokemonSearchPage: React.FC<PokemonSearchPageProps> = ({ loadingPokemon, pokemon, query, resultQuery, onPokemonClick, onQueryChange }) => {
   const classes = useStyles();
 
-  const onPokemonClicked = React.useCallback((pokemon: PokemonPartyInput) => () => {
-    onAddToParty(pokemon)
-  }, [onAddToParty]);
+  const onPokemonClicked = React.useCallback((pokemon: Partial<Pokemon>) => () => {
+    onPokemonClick(pokemon, !!pokemon ? !pokemon.inParty : true)
+  }, [onPokemonClick]);
 
   return (
     <React.Fragment>
@@ -58,7 +61,7 @@ const PokemonSearchPage: React.FC<PokemonSearchPageProps> = ({ loadingPokemon, p
         <Container>
           {pokemon.length > 0 ? pokemon.map(pokemon => (
             <Card key={pokemon.id} className={classes.card}>
-              <CardActionArea className={classes.cardArea} onClick={onPokemonClicked(pokemon as PokemonPartyInput)}>
+              <div className={classes.cardContent}>
                 <CardMedia
                   className={classes.cardMedia}
                   image={(pokemon.images && pokemon.images.thumbnail) || undefined}
@@ -69,7 +72,21 @@ const PokemonSearchPage: React.FC<PokemonSearchPageProps> = ({ loadingPokemon, p
                     {pokemon.name && pokemon.name.english}
                   </Typography>
                 </CardContent>
-              </CardActionArea>
+
+                {pokemon.inParty && (
+                  <img alt="In Party" className={classes.pokeball} src="/images/pokeball.png" />
+                )}
+              </div>
+              <CardActions disableSpacing>
+                <Fab
+                  variant="extended"
+                  size="medium"
+                  color="primary"
+                  onClick={onPokemonClicked(pokemon)}>
+                  <AddCircleIcon />
+                  Add to party
+                </Fab>
+              </CardActions>
             </Card>
           )) : !loadingPokemon && resultQuery && (
             <Typography variant="subtitle1">No pokémon found for `{resultQuery}`</Typography>
@@ -105,7 +122,16 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(2)
   },
   cardContent: {
+    display: 'flex',
+    alignItems: 'center',
     flex: 1
+  },
+  pokeball: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    width: 30,
+    height: 30
   }
 }));
 

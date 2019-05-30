@@ -1,6 +1,4 @@
-import { Pokemon } from "../../types";
-
-import { PokemonImage } from './types';
+import { Pokemon, PokemonImage } from "../../types";
 
 export default {
   Pokemon: {

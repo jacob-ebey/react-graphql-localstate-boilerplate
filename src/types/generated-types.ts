@@ -38,6 +38,7 @@ export type Mutation = {
   __typename?: "Mutation";
   setDrawerOpen: Scalars["Boolean"];
   addToParty?: Maybe<Scalars["Boolean"]>;
+  removeFromParty?: Maybe<Scalars["Boolean"]>;
 };
 
 export type MutationSetDrawerOpenArgs = {
@@ -46,6 +47,10 @@ export type MutationSetDrawerOpenArgs = {
 
 export type MutationAddToPartyArgs = {
   pokemon: PokemonPartyInput;
+};
+
+export type MutationRemoveFromPartyArgs = {
+  id: Scalars["ID"];
 };
 
 export type PartyPokemon = {
@@ -70,6 +75,7 @@ export type Pokemon = {
   types: Array<PokemonType>;
   base: PokemonBaseStats;
   images: PokemonImage;
+  inParty: Scalars["Boolean"];
 };
 
 export type PokemonBaseStats = {
@@ -179,8 +185,14 @@ export type PokemonSearchPageQuery = { __typename?: "Query" } & {
       "total"
     > & {
         results: Array<
-          { __typename?: "Pokemon" } & Pick<Pokemon, "id" | "pokedexNumber"> & {
-              name: { __typename?: "MultiLang" } & Pick<MultiLang, "english">;
+          { __typename?: "Pokemon" } & Pick<
+            Pokemon,
+            "id" | "pokedexNumber" | "inParty"
+          > & {
+              name: { __typename?: "MultiLang" } & Pick<
+                MultiLang,
+                "english" | "japanese" | "chinese"
+              >;
               images: { __typename?: "PokemonImage" } & Pick<
                 PokemonImage,
                 "thumbnail"
@@ -221,22 +233,31 @@ export type AddToPartyMutation = { __typename?: "Mutation" } & Pick<
   "addToParty"
 >;
 
+export type RemoveFromPartyMutationVariables = {
+  id: Scalars["ID"];
+};
+
+export type RemoveFromPartyMutation = { __typename?: "Mutation" } & Pick<
+  Mutation,
+  "removeFromParty"
+>;
+
 export type ActivePartyQueryVariables = {};
 
 export type ActivePartyQuery = { __typename?: "Query" } & {
-  party: { __typename?: "PartyState" } & {
-    activeParty: Maybe<
-      Array<
-        { __typename?: "PartyPokemon" } & Pick<
-          PartyPokemon,
-          "id" | "pokedexNumber"
-        > & {
-            name: { __typename?: "MultiLang" } & Pick<
-              MultiLang,
-              "english" | "japanese" | "chinese"
-            >;
-          }
-      >
-    >;
-  };
+  party: { __typename?: "PartyState" } & Pick<PartyState, "activeCount"> & {
+      activeParty: Maybe<
+        Array<
+          { __typename?: "PartyPokemon" } & Pick<
+            PartyPokemon,
+            "id" | "pokedexNumber"
+          > & {
+              name: { __typename?: "MultiLang" } & Pick<
+                MultiLang,
+                "english" | "japanese" | "chinese"
+              >;
+            }
+        >
+      >;
+    };
 };

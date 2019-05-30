@@ -1,4 +1,4 @@
-import { DrawerState } from './types';
+import { DrawerState } from '../../types';
 
 const defaults: DrawerState = {
   open: false,

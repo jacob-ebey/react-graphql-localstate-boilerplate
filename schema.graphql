@@ -12,6 +12,7 @@ type Query {
 type Mutation {
   setDrawerOpen(open: Boolean!): Boolean!
   addToParty(pokemon: PokemonPartyInput!): Boolean
+  removeFromParty(id: ID!): Boolean
 }
 
 type PokemonImage {
@@ -22,6 +23,7 @@ type PokemonImage {
 
 type Pokemon {
   images: PokemonImage!
+  inParty: Boolean!
 }
 
 type DrawerState {

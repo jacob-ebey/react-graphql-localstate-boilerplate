@@ -17,6 +17,7 @@ query PokemonSearchPage($query: String, $first: Int, $skip: Int, $types: [String
       images @client {
         thumbnail
       }
+      inParty @client
     }
   }
 }
